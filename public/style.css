@@ -20,17 +20,11 @@ html {
     margin: 0;
 }
 
-ul {
-    padding: 12px 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
 h1,
 h2 {
     font-family: var(--font-heading);
+    padding: 0;
+    margin: 0;
 }
 
 h2 {
@@ -61,10 +55,21 @@ li {
     border-radius: 20px;
 }
 
+ul {
+    padding: 12px 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 12px;
+}
+
 li {
     display: flex;
+    flex-direction: column;
     gap: 24px;
     align-items: center;
+    text-align: center;
 }
 
 li:has(.sick) {
