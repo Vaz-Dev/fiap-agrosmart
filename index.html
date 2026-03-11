@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <title>Agrosmart</title>
+    </head>
+    <body>
+        <header>
+            <h1>Agrosmart 0.1</h1>
+        </header>
+        <main>
+            <hgroup>
+                <h2>Indentifique a saude de sua plantação</h2>
+                <p>
+                    Utilizando 'Machine Learning', o projeto Agrosmart fornece
+                    uma ferramenta para indentificação de doenças e pragas na
+                    sua plantação.<br />
+                    Para utilizar, simplesmente carregue sua foto abaixo.
+                </p>
+                <input type="file" id="image-selector" accept="image/*" />
+            </hgroup>
+            <ul>
+                <template>
+                    <li>
+                        <img width="200" src="#" alt="Selected Image" />
+                        <div class="reading-info">
+                            <p class="reading-info-text"></p>
+                            <p class="reading-info-number"></p>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </main>
+        <footer></footer>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+        <script type="module" src="/main.js"></script>
+    </body>
+</html>
