@@ -85,6 +85,50 @@ li:has(.healthy) {
 .healthy {
     color: var(--clr-healthy) !important;
 }
+#buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.fake-button-wrapper {
+    position: relative;
+}
+
+.fake-button-wrapper:hover .fake-button {
+    filter: brightness(1.2);
+}
+
+#image-selector {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.fake-button {
+    background-color: var(--clr-healthy);
+    color: var(--clr-light);
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: none;
+    pointer-events: none;
+    transition: 0.2s all;
+}
+
+.download {
+    background-color: var(--clr-sick);
+    color: var(--clr-light);
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: none;
+}
+
+.hidden {
+    display: none;
+}
 
 @media (prefers-color-scheme: dark) {
     body,

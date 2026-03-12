@@ -19,14 +19,24 @@
         </header>
         <main>
             <hgroup>
-                <h2>Indentifique a saude de sua plantação</h2>
+                <h2>Identifique a saúde da sua plantação</h2>
                 <p>
                     Utilizando 'Machine Learning', o projeto Agrosmart fornece
                     uma ferramenta para indentificação de doenças e pragas na
                     sua plantação.<br />
                     Para utilizar, simplesmente carregue sua foto abaixo.
                 </p>
-                <input type="file" id="image-selector" accept="image/*" />
+                <div id="buttons">
+                    <div class="fake-button-wrapper">
+                        <input
+                            type="file"
+                            id="image-selector"
+                            accept="image/*"
+                        />
+                        <button class="fake-button">Enviar Foto</button>
+                    </div>
+                    <button class="download hidden">Baixar Dados</button>
+                </div>
             </hgroup>
             <ul>
                 <template>
@@ -44,5 +54,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
         <script type="module" src="/main.js"></script>
+        <code class="hidden"></code>
     </body>
 </html>

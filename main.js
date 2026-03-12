@@ -1,10 +1,8 @@
-const URL = "./model/";
-
 let model, labelContainer;
 
 async function init() {
-  const modelURL = URL + "model.json";
-  const metadataURL = URL + "metadata.json";
+  const modelURL = "./model/model.json";
+  const metadataURL = "./model/metadata.json";
 
   model = await tmImage.load(modelURL, metadataURL);
 }
@@ -45,10 +43,12 @@ async function predict(image) {
   };
 }
 
+const data = [];
+
 window.onload = async function () {
   await init();
 
-  const imageSelector = document.getElementById("image-selector");
+  const imageSelector = document.querySelector("input");
   const list = document.querySelector("ul");
 
   imageSelector.addEventListener("change", (event) => {
@@ -63,6 +63,9 @@ window.onload = async function () {
     const file = event.target.files[0];
     if (!file) return;
 
+    const newData = {};
+    newData.image = file.name;
+
     const reader = new FileReader();
     reader.onload = function (e) {
       image.onload = async () => {
@@ -71,14 +74,17 @@ window.onload = async function () {
         text.classList.add(prediction.percentage < 50 ? "healthy" : "sick");
         numberText.textContent =
           "Chance de estar saudável: " + (100 - prediction.percentage) + "%";
+        newData.text = prediction.text;
+        newData.percentage = prediction.percentage;
       };
       image.src = e.target.result;
-      image.style.display = "block";
 
       text.textContent = "Analisando...";
       numberText.textContent = "";
 
       list.appendChild(templateClone);
+      data.push(newData);
+      toggleDownload();
     };
 
     reader.readAsDataURL(file);
@@ -86,3 +92,20 @@ window.onload = async function () {
     event.target.value = "";
   });
 };
+
+const downloadWrapper = document.querySelector("code");
+function toggleDownload() {
+  const button = document.querySelector(".download");
+  button.addEventListener("click", () => {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const blobUrl = URL.createObjectURL(blob);
+    downloadWrapper.innerHTML = `
+      <a class="hidden" id="anchor" href="${blobUrl}" download="agrosmart-${Date.now()}"></a>
+      `;
+    const anchor = downloadWrapper.querySelector("#anchor");
+    anchor.dispatchEvent(new MouseEvent("click"));
+    setTimeout(() => URL.revokeObjectURL(blobUrl));
+  });
+  button.classList.remove("hidden");
+}
