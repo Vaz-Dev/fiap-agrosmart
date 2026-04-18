@@ -144,6 +144,15 @@ li:has(.healthy) {
     height: 400px;
 }
 
+.dashboard-grid > .charts:nth-child(odd):last-child:not(:first-child) {
+    grid-column: 1 / -1;
+    width: 60%;
+}
+
+.dashboard-grid > .charts:nth-child(odd):last-child:not(:first-child) > div {
+    height: 430px;
+}
+
 .download {
     background-color: var(--clr-sick);
     color: var(--clr-light);
@@ -168,6 +177,10 @@ li:has(.healthy) {
     }
 
     .charts {
+        width: 100%;
+    }
+
+    .dashboard-grid > .charts:nth-child(odd):last-child:not(:first-child) {
         width: 100%;
     }
 
