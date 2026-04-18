@@ -3,6 +3,7 @@ import { Chart } from "chart.js/auto"
 
 const positiveNegative = document.getElementById("positive-negative-chart")
 const textResult = document.getElementById("text-result-chart")
+const percentHealth = document.getElementById("percentil-healthness")
 
 const getData = async () => {
   const response = await fetch("/dados")
@@ -23,13 +24,11 @@ const plugin = {
 };
 
 const generalResultChart = (saudavel, doente, inconclusivo) => {
-  var total = saudavel + doente + inconclusivo
   new Chart(positiveNegative, {
-  type: "bar",
+  type: "doughnut",
   data: {
     labels: ["Saudável", "Doente", "Inconclusivo"],
     datasets: [{
-      label: `${Math.round((saudavel/total) * 100)}% de plantas saudáveis`,
       data: [saudavel, doente, inconclusivo],
     }]
   },
@@ -77,13 +76,11 @@ const textResultChart = (data) => {
         },
         legend: {
           labels: {
-            // font: {
-            //   size: 15
-            // }
+            font: {
+              size: 15
+            }
           }
-
         }
-
       },
       layout: {
               padding: 20
@@ -93,8 +90,35 @@ const textResultChart = (data) => {
   })
 }
 
+const healthPercent = (saudavel, doente, inconclusivo) => {
+  var total = saudavel + doente + inconclusivo
+  new Chart(percentHealth, {
+  type: "bar",
+  data: {
+    labels: ["Saudável", "Doente", "Inconclusivo"],
+    datasets: [{
+      label: `${Math.round((saudavel/total) * 100)}% de plantas saudáveis`,
+      data: [saudavel, doente, inconclusivo],
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      customCanvasBackgroundColor: {
+        color: 'white',
+      }
+    },
+    layout: {
+              padding: 20
+          }
+  },
+  plugins: [plugin],
+})
+
+}
+
 const loadCharts = (data) => {
-  console.log(data)
   var doente = 0, saudavel = 0, inconclusivo = 0
   data.forEach((e) => {
     if (e.percentage < 50) {
@@ -110,6 +134,7 @@ const loadCharts = (data) => {
   //var saudavel = data.filter((e) => e.percentage < 50)
   //var doente = data.filter((e) => e.percentage > 50)
   generalResultChart(saudavel, doente, inconclusivo)
+  healthPercent(saudavel, doente, inconclusivo)
   textResultChart(data)
 
 }
