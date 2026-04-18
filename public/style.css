@@ -123,6 +123,10 @@ li:has(.healthy) {
     transition: 0.2s all;
 }
 
+.charts {
+    margin-top: 20px;
+}
+
 .download {
     background-color: var(--clr-sick);
     color: var(--clr-light);
@@ -133,6 +137,11 @@ li:has(.healthy) {
 
 .hidden {
     display: none;
+}
+
+canvas {
+    width: 300px;
+    padding: 20px
 }
 
 @media (prefers-color-scheme: dark) {

@@ -15,7 +15,7 @@
 </head>
 <body>
   <header>
-    <h1>Agrosmart 0.1</h1>
+    <h1>Agrosmart 0.1 - Dashboard</h1>
   </header>
   <nav class="flex items-center justify-between bg-green-800 px-6 py-4">
             <div class="flex gap-4">
@@ -24,9 +24,14 @@
             </div>
   </nav>
   <main>
-    <hgroup>
+    <hgroup class="charts">
       <div>
-        <canvas id="chart"></canvas>
+        <canvas id="positive-negative-chart"></canvas>
+      </div>
+    </hgroup>
+    <hgroup class="charts">
+      <div>
+        <canvas id="text-result-chart"></canvas>
       </div>
     </hgroup>
   </main>
