@@ -34,13 +34,15 @@ const generalResultChart = (saudavel, doente, inconclusivo) => {
     }]
   },
   options: {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       customCanvasBackgroundColor: {
         color: 'white',
       }
     },
     layout: {
-              padding: 30
+              padding: 20
           }
   },
   plugins: [plugin],
@@ -53,7 +55,7 @@ const textResultChart = (data) => {
     acc[curr] = (acc[curr] || 0) + 1;
     return acc
   }, {})
-  console.log(rotulos2)
+
   var labs = Object.keys(rotulos2)
   var newData = Object.values(rotulos2)
   new Chart(textResult, {
@@ -62,17 +64,29 @@ const textResultChart = (data) => {
       labels: labs,
       datasets: [{
         data: newData,
-        barThickness: 50
+        label: "Resultados",
+        maxBarThickness: 40
       }]
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         customCanvasBackgroundColor: {
           color: 'white',
+        },
+        legend: {
+          labels: {
+            // font: {
+            //   size: 15
+            // }
+          }
+
         }
+
       },
       layout: {
-              padding: 30
+              padding: 20
           }
     },
     plugins: [plugin],
@@ -104,5 +118,4 @@ window.onload = async () => {
   const data = await getData()
   loadCharts(data)
 }
-
 
