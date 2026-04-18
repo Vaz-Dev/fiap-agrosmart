@@ -10,20 +10,33 @@ app.use(express.json())
 
 app.use(express.static(import.meta.dirname))
 
-app.post("/csv", (req, res) => {
-  const { predictionText, predictionPercentage } = req.body
-  fs.appendFileSync("backend/dados.csv", `${predictionText},${predictionPercentage}\n`)
-
+app.post("/dados", (req, res) => {
+  const dado = req.body
+  
+  if (fs.existsSync("backend/dados.json")) {
+    const conteudo = fs.readFileSync("backend/dados.json", "utf8")
+    if (conteudo == "") {
+      var array = []
+      array.push(dado)
+      fs.writeFileSync("backend/dados.json", JSON.stringify(array))
+    }
+    else {
+      var conteudoTratado = JSON.parse(conteudo)
+      conteudoTratado.push(dado)
+      fs.writeFileSync("backend/dados.json", JSON.stringify(conteudoTratado))
+    }
+  }
   res.json({ ok: true })
 })
 
-app.get("/csv", (req, res) => {
+app.get("/dados", (req, res) => {
   try {
-    const content = fs.readFileSync("backend/dados.csv", "utf-8")
-    const row = content.split
-
+    const content = fs.readFileSync("backend/dados.json", "utf-8")
+    const conteudoTratado = JSON.parse(content)
+    res.send(conteudoTratado)
+    
   } catch (err) {
-
+    console.log(err)
   }
 })
 

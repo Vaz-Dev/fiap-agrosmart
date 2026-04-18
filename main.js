@@ -8,13 +8,13 @@ async function init() {
   model = await tmImage.load(modelURL, metadataURL);
 }
 
-async function sendData({predictionText, predictionPercentage}) {
-  await fetch("/csv", {
+async function sendData(dado) {
+  await fetch("/dados", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ predictionText, predictionPercentage })
+    body: JSON.stringify(dado)
 })
 }
 
@@ -50,12 +50,13 @@ async function predict(image) {
       throw new Error("Ocorreu um erro");
   }
 
-  console.log("aqui cheguei")
-  await sendData({ predictionText, predictionPercentage })
-  return {
+  const dado = {
     text: predictionText,
     percentage: predictionPercentage,
-  };
+  }
+
+  await sendData(dado)
+  return dado;
 }
 
 const data = [];
@@ -84,14 +85,13 @@ window.onload = async function () {
 
     const reader = new FileReader();
     reader.onload = function (e) {
-        console.log("reader.onload disparou");
+    
 
       image.onload = async () => {
-        console.log("image.onload disparou");
         try {
 
           let prediction = await predict(image);
-          console.log("prediction:", prediction);
+    
           
           text.textContent = prediction.text;
           text.classList.add(prediction.percentage < 50 ? "healthy" : "sick");
@@ -106,7 +106,6 @@ window.onload = async function () {
       };
       image.src = e.target.result;
         console.log("src atribuído:", image.src.slice(0, 30));
-
 
       text.textContent = "Analisando...";
       numberText.textContent = "";

@@ -11,7 +11,7 @@ export default defineConfig({
       ignored: ["**/backend/**"],
     },
     proxy:{
-      "/csv": "http://localhost:3000"
+      "/dados": "http://localhost:3000"
       },
     }
 });
