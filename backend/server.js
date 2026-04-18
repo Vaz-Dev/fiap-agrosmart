@@ -17,6 +17,16 @@ app.post("/csv", (req, res) => {
   res.json({ ok: true })
 })
 
+app.get("/csv", (req, res) => {
+  try {
+    const content = fs.readFileSync("backend/dados.csv", "utf-8")
+    const row = content.split
+
+  } catch (err) {
+
+  }
+})
+
 app.listen(3000, () => {
   console.log("rodando na porta 3000")
 })
