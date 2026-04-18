@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:backend": "node backend/server.js",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -13,5 +14,13 @@
   },
   "overrides": {
     "vite": "^8.0.0-beta.13"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindplus/elements": "^1.0.22",
+    "chart.js": "^4.5.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "tailwindcss": "^4.2.2"
   }
 }
