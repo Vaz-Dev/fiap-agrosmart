@@ -33,10 +33,15 @@ app.get("/dados", (req, res) => {
   try {
     const content = fs.readFileSync("backend/dados.json", "utf-8")
     const conteudoTratado = JSON.parse(content)
-    res.send(conteudoTratado)
+    res.status(200).json(conteudoTratado);
     
   } catch (err) {
-    console.log(err)
+    if (err.code === "ENOENT") {
+      return res.status(404).json({ erro: "Arquivo não encontrado" });
+    }
+
+    return res.status(500).json({ erro: "Erro interno do servidor" });
+    
   }
 })
 

@@ -119,6 +119,11 @@ const healthPercent = (saudavel, doente, inconclusivo) => {
 }
 
 const loadCharts = (data) => {
+  if (!data || data.length == 0) {
+    positiveNegative.innerHTML = "<p>Sem dados disponíveis</p>"
+    return 0
+  }
+  positiveNegative.innerHTML = ""
   var doente = 0, saudavel = 0, inconclusivo = 0
   data.forEach((e) => {
     if (e.percentage < 50) {
