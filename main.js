@@ -1,4 +1,5 @@
 let model, labelContainer;
+import './public/style.css'
 
 async function init() {
   const modelURL = "./model/model.json";
@@ -7,7 +8,18 @@ async function init() {
   model = await tmImage.load(modelURL, metadataURL);
 }
 
+async function sendData(dado) {
+  await fetch("/dados", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dado)
+})
+}
+
 async function predict(image) {
+
   const predictionData = await model.predict(image);
   const predictionPercentage = Math.round(predictionData[0].probability * 100);
   let predictionText;
@@ -37,10 +49,14 @@ async function predict(image) {
       predictionText = "Ocorreu um erro";
       throw new Error("Ocorreu um erro");
   }
-  return {
+
+  const dado = {
     text: predictionText,
     percentage: predictionPercentage,
-  };
+  }
+
+  await sendData(dado)
+  return dado;
 }
 
 const data = [];
@@ -52,6 +68,7 @@ window.onload = async function () {
   const list = document.querySelector("ul");
 
   imageSelector.addEventListener("change", (event) => {
+    event.preventDefault()
     const templateClone = document
       .querySelector("template")
       .content.cloneNode(true);
@@ -68,16 +85,27 @@ window.onload = async function () {
 
     const reader = new FileReader();
     reader.onload = function (e) {
+    
+
       image.onload = async () => {
-        let prediction = await predict(image);
-        text.textContent = prediction.text;
-        text.classList.add(prediction.percentage < 50 ? "healthy" : "sick");
-        numberText.textContent =
+        try {
+
+          let prediction = await predict(image);
+    
+          
+          text.textContent = prediction.text;
+          text.classList.add(prediction.percentage < 50 ? "healthy" : "sick");
+          numberText.textContent =
           "Chance de estar saudável: " + (100 - prediction.percentage) + "%";
-        newData.text = prediction.text;
-        newData.percentage = prediction.percentage;
+          newData.text = prediction.text;
+          newData.percentage = prediction.percentage;
+        } catch (e) {
+          console.error("Erro no image.onload:", e);
+
+        }
       };
       image.src = e.target.result;
+        console.log("src atribuído:", image.src.slice(0, 30));
 
       text.textContent = "Analisando...";
       numberText.textContent = "";
